@@ -1,23 +1,51 @@
-import logo from './logo.svg';
 import './App.css';
+import React, { useState } from "react";
+
+import { Button } from "./components/Button";
+import { Grid } from "./components/Grid";
+
+const buttons = [
+  {text: "start", color: "yellow"},
+  {text: "wall", color: "black"},
+  {text: "end", color: "red"}
+]
+
 
 function App() {
+  const [isActiveItem, setIsActiveItem] = useState("start");
+  const [isStarted, setStarted] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div class="wrapper">
+      <div class="upper">
+        {buttons.map((item) => {
+          return (
+            <Button
+            color={item.color}
+            active={isActiveItem === item.text ? item.text : null}
+            onClick={() => setIsActiveItem(item.text)}
+          >
+            {item.text}
+          </Button>
+          );
+        })}
+        <Button
+            color={"green"}
+            active={isStarted}
+            onClick={() => setStarted(true)}
+          >
+            Start
+        </Button>
+      </div>
+      <div class="lower">
+        <Grid 
+          fieldSquare={40}
+          gridHeight={5}
+          gridWidth={5}
+          activeButton={isActiveItem}
+          startAlgorithm={isStarted}
+        ></Grid>
+      </div>
     </div>
   );
 }
