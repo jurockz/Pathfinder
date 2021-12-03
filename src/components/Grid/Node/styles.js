@@ -19,10 +19,13 @@ export const StyledInnerNode = styled.div`
                             (!props.isStart && !props.isEnd && !props.isWall) ? 
                             resize(props.fieldSquare) : ""} 
                             1s linear;
+    animation: ${(props) => props.isVisited ? 
+                            resize(props.fieldSquare) : ""} 
+                            1s linear;
     width: ${(props) => props.fieldSquare}px;
     height: ${(props) => props.fieldSquare}px;
     transition: all 1s;
-    background-color: ${(props) => props.isStart ? "yellow" : props.isEnd ? "red" : props.isVisited ? "green" : props.isWall ? "black" : "lightgrey"};
+    background-color: ${(props) => props.isStart ? "yellow" : props.isEnd ? "red" : props.isShortest ? "blue" : props.isVisited ? "green" : props.isWall ? "black" : "lightgrey"};
     cursor: pointer;
 `;
 

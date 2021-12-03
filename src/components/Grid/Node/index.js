@@ -2,7 +2,7 @@ import React from "react";
 
 import { StyledNode, StyledInnerNode } from "./styles"
 
-export const Node = ({ fieldSquare, isStart, isEnd, isWall, isUndefined, isVisited, onClick, onMouseMove, onMouseLeave }) => {
+export const Node = ({ fieldSquare, isStart, isEnd, isWall, isShortest, isVisited, onClick, onMouseMove, onMouseLeave }) => {
     return (
         <>
             <StyledNode
@@ -13,7 +13,7 @@ export const Node = ({ fieldSquare, isStart, isEnd, isWall, isUndefined, isVisit
                     isStart={isStart}
                     isEnd={isEnd}
                     isWall={isWall}
-                    isUndefined={isUndefined}
+                    isShortest={isShortest}
                     isVisited={isVisited}
                     onClick={onClick}
                     onMouseMove={onMouseMove}
