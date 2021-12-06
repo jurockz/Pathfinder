@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { StyledGrid, StyledRow } from "./styles";
 import { Node } from "./Node";
@@ -16,75 +16,6 @@ export const Grid = ({
 }) => {
   const [isMouseDown, setMouseDown] = useState(false);
   const [isFieldTriggered, setFieldTriggered] = useState(false);
-
-  //Pathfinding------------------START--------------------------------------------------------
-
-  // const [isAnimationIndex, setAnimationIndex] = useState(0);
-  // const [isAnimationStarted, setAnimationStarted] = useState(false);
-  // const [isShortestPath, setShortestPath] = useState(null);
-  // const [isVisitedVertices, setVisitedVertices] = useState(null);
-
-  // const animateAlgorithm = (visitedVertices, shortestPath) => {
-  // //     setAnimationIndex(0);
-  // //     var interval = setTimeout(function(){
-  // //         debugger;
-  // //         // const copy = _.cloneDeep(isGrid);
-  // //         // copy[visitedVertices[index].coordinates.row][visitedVertices[index].coordinates.col].isVisited = true;
-  // //         // setGrid(copy);
-  // //         let temp = isAnimationIndex +1;
-  // //         setAnimationIndex(temp);
-  // //         if(isAnimationIndex === visitedVertices.length){
-  // //             clearInterval(interval);
-  // //         }
-  // //    }, 1000)
-  // }
-
-  // const BFS = () => {
-  //     const copy = _.cloneDeep(isGrid);
-  //     setShortestPath(breadthFirstSearch(copy, isStart, isEnd))
-  //     setVisitedVertices(getShortestPath(copy[isEnd.row][isEnd.column]))
-  // }
-
-  // useEffect(() => {
-  //     if(startAlgorithm) {
-  //         const ret = BFS();
-  //         // var interval = null;
-  //         // const ret = BFS();
-  //         // var visitedVertices = ret[0];
-  //         // var shortestPath = ret[1];
-  //         // interval = setInterval(() => {
-  //         //     setAnimationIndex((temp) => {
-  //         //         if(temp === visitedVertices.length) {
-  //         //             console.log("end of visited");
-  //         //             clearInterval(interval);
-  //         //         }
-  //         //         debugger;
-  //         //         // const copy = _.cloneDeep(isGrid);
-  //         //         // copy[visitedVertices[isAnimationIndex].coordinates.row][visitedVertices[isAnimationIndex].coordinates.col].isVisited = true;
-  //         //         // setGrid(copy);
-  //         //         return temp +1;
-  //         //     });
-  //         // },1000)
-  //         // return () =>{if(interval !== null) clearInterval(interval);}
-  //         console.log(isShortestPath);
-  //         debugger;
-  //         const counterInterval = setInterval(function () {
-  //             debugger;
-  //             setAnimationIndex((prev) => {
-  //                 debugger;
-  //                 console.log(prev);
-  //                 // const copy = _.cloneDeep(isGrid);
-  //                 // copy[1][1].isVisited = !copy[1][1].isVisited
-  //                 // setGrid(copy);
-  //                 return prev + 1;
-  //             });
-  //         }, 1000);
-  //         return () => clearInterval(counterInterval);
-
-  //     }
-  // }, [startAlgorithm, isShortestPath])
-
-  //Pathfinding------------------END----------------------------------------------------------
 
   const clickHandler = (row, column) => {
     // Start and end not at the same position
@@ -132,17 +63,21 @@ export const Grid = ({
     handleGridChange(temp);
   };
 
-  const returnState = (row, column, state) => {
-    if (grid[row][column].isStart && state === "start") {
-      return true;
-    } else if (grid[row][column].isEnd && state === "end") {
-      return true;
-    } else if (grid[row][column].isWall && state === "wall") {
-      return true;
+  const returnExtraClass = (row, column) => {
+    if (grid[row][column].isStart) {
+      return "isStart";
+    } else if (grid[row][column].isEnd) {
+      return "isEnd";
+    } else if (grid[row][column].isWall) {
+      return "isWall";
+    } else if (grid[row][column].isShortest) {
+      return "isShortest";
+    } else if (grid[row][column].isVisited) {
+      return "isVisited";
     } else {
-      return false;
+      return "";
     }
-  };
+  }
 
   return (
     <>
@@ -157,12 +92,7 @@ export const Grid = ({
                 return (
                   <Node
                     key={column}
-                    fieldSquare={fieldSquare}
-                    isStart={returnState(row, column, "start")}
-                    isEnd={returnState(row, column, "end")}
-                    isWall={returnState(row, column, "wall")}
-                    isVisited={grid[row][column].isVisited}
-                    isShortest={grid[row][column].isShortest}
+                    extraClass={returnExtraClass(row,column)}
                     onClick={() => clickHandler(row, column)}
                     onMouseMove={() => mouseMoveHandler(row, column)}
                     onMouseLeave={() => setFieldTriggered(false)}

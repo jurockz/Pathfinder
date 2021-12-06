@@ -1,33 +1,23 @@
 import React from "react";
 
-import { StyledNode, StyledInnerNode } from "./styles";
+import "./styles.css";
 
 export const Node = ({
-  fieldSquare,
-  isStart,
-  isEnd,
-  isWall,
-  isShortest,
-  isVisited,
+  extraClass,
   onClick,
   onMouseMove,
   onMouseLeave,
 }) => {
   return (
     <>
-      <StyledNode fieldSquare={fieldSquare}>
-        <StyledInnerNode
-          fieldSquare={fieldSquare}
-          isStart={isStart}
-          isEnd={isEnd}
-          isWall={isWall}
-          isShortest={isShortest}
-          isVisited={isVisited}
+      <div className="node-wrapper">
+        <div
+          className={"node " + extraClass}
           onClick={onClick}
           onMouseMove={onMouseMove}
           onMouseLeave={onMouseLeave}
-        ></StyledInnerNode>
-      </StyledNode>
+        ></div>
+      </div>
     </>
   );
 };

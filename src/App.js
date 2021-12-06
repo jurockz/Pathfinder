@@ -15,12 +15,16 @@ import {
 // Algorithms
 import {
   breadthFirstSearch,
-  getShortestPath,
+  getShortestPath
 } from "./components/Grid/algorithms/BreadthFirstSearch";
+import {
+  astar
+} from "./components/Grid/algorithms/Astar";
 
 // Const
-const graphRows = 10;
-const graphColumns = 20;
+const graphRows = 20;
+const graphColumns = 40;
+const fieldSquare = 20;
 const buttons = [
   { text: "start", color: "yellow" },
   { text: "wall", color: "black" },
@@ -34,6 +38,7 @@ function App() {
   const [isGrid, setGrid] = useState(initializeGrid(graphRows, graphColumns));
   const [isStart, setActiveStart] = useState(null);
   const [isEnd, setActiveEnd] = useState(null);
+  const [isAlgorithm, setAlgorithm] = useState("BFS");
 
   const handleGridChange = (newGrid) => {
     setGrid(newGrid);
@@ -50,7 +55,9 @@ function App() {
   const startAlgorithm = () => {
     if (!isStart || !isEnd) return;
     setGrid(clearAlgorithmStates(isGrid));
-    const algorithmOutput = BFS();
+    let algorithmOutput = null;
+    if(isAlgorithm === "BFS") algorithmOutput = BFS();
+    if(isAlgorithm === "Astar") algorithmOutput = Astar();
     animate(algorithmOutput[0], algorithmOutput[1]);
   };
 
@@ -70,7 +77,7 @@ function App() {
         return copy;
       });
       counter++;
-    }, 50);
+    }, 10);
   };
 
   const animatePath = (path) => {
@@ -88,12 +95,19 @@ function App() {
         return copy;
       });
       counter++;
-    }, 50);
+    }, 10);
   };
 
   const BFS = () => {
     const copy = _.cloneDeep(isGrid);
     let visitedVertices = breadthFirstSearch(copy, isStart, isEnd);
+    let shortestPath = getShortestPath(copy[isEnd.row][isEnd.column]);
+    return [visitedVertices, shortestPath];
+  };
+
+  const Astar = () => {
+    const copy = _.cloneDeep(isGrid);
+    let visitedVertices = astar(copy, isStart, isEnd);
     let shortestPath = getShortestPath(copy[isEnd.row][isEnd.column]);
     return [visitedVertices, shortestPath];
   };
@@ -119,7 +133,7 @@ function App() {
       </div>
       <div className="lower">
         <Grid
-          fieldSquare={40}
+          fieldSquare={fieldSquare}
           activeButton={isActiveItem}
           grid={isGrid}
           isStart={isStart}

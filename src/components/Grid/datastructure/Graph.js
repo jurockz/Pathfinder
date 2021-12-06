@@ -24,6 +24,8 @@ const createVertex = (row, col) => {
         isShortest: false,
         isWall: false,
         shortest: null,
+        distance: 0,
+        totalDistance: 0,
         edges: [],
     }
 }
