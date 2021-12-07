@@ -10,6 +10,8 @@ import { Grid } from "./components/Grid";
 import {
   initializeGrid,
   clearAlgorithmStates,
+  clearAllStates,
+  randomStates
 } from "./components/Grid/datastructure/Graph";
 
 // Algorithms
@@ -17,6 +19,9 @@ import {
   breadthFirstSearch,
   getShortestPath
 } from "./components/Grid/algorithms/BreadthFirstSearch";
+import {
+  depthFirstSearch
+} from "./components/Grid/algorithms/DepthFirstSearch";
 import {
   astar
 } from "./components/Grid/algorithms/Astar";
@@ -28,7 +33,12 @@ const fieldSquare = 20;
 const buttons = [
   { text: "start", color: "yellow" },
   { text: "wall", color: "black" },
-  { text: "end", color: "red" },
+  { text: "end", color: "#be5151" },
+];
+const AlgorithmButtons = [
+  { text: "Breadth First Search", color: "transparent" },
+  { text: "A*", color: "transparent" },
+  { text: "Depth First Search", color: "transparent" }
 ];
 var counter = 0;
 
@@ -38,7 +48,8 @@ function App() {
   const [isGrid, setGrid] = useState(initializeGrid(graphRows, graphColumns));
   const [isStart, setActiveStart] = useState(null);
   const [isEnd, setActiveEnd] = useState(null);
-  const [isAlgorithm, setAlgorithm] = useState("BFS");
+  const [isAlgorithm, setAlgorithm] = useState("Breadth First Search");
+  const [isAlgorithmRunning, setAlgorithmRunning] = useState(false);
 
   const handleGridChange = (newGrid) => {
     setGrid(newGrid);
@@ -52,12 +63,29 @@ function App() {
     setActiveEnd(coordinates);
   };
 
+  const handleGridClear = () => {
+    if(isAlgorithmRunning) return;
+    setGrid(clearAllStates(_.cloneDeep(isGrid)));
+  }
+
+  const handleGridAlgorithmClear = () => {
+    if(isAlgorithmRunning) return;
+    setGrid(clearAlgorithmStates(_.cloneDeep(isGrid)));
+  }
+
+  const randomGrid = () => {
+    if(isAlgorithmRunning) return;
+    setGrid(randomStates(clearAllStates(_.cloneDeep(isGrid), false)));
+  }
+
   const startAlgorithm = () => {
-    if (!isStart || !isEnd) return;
+    if (!isStart || !isEnd || isAlgorithmRunning) return;
+    setAlgorithmRunning(true);
     setGrid(clearAlgorithmStates(isGrid));
     let algorithmOutput = null;
-    if(isAlgorithm === "BFS") algorithmOutput = BFS();
-    if(isAlgorithm === "Astar") algorithmOutput = Astar();
+    if(isAlgorithm === "Breadth First Search") algorithmOutput = BFS();
+    if(isAlgorithm === "A*") algorithmOutput = Astar();
+    if(isAlgorithm === "Depth First Search") algorithmOutput = DFS();
     animate(algorithmOutput[0], algorithmOutput[1]);
   };
 
@@ -84,6 +112,7 @@ function App() {
     var interval = setInterval(() => {
       if (counter === path.length) {
         counter = 0;
+        setAlgorithmRunning(false);
         clearInterval(interval);
         return;
       }
@@ -105,6 +134,13 @@ function App() {
     return [visitedVertices, shortestPath];
   };
 
+  const DFS = () => {
+    const copy = _.cloneDeep(isGrid);
+    let visitedVertices = depthFirstSearch(copy, isStart, isEnd);
+    let shortestPath = getShortestPath(copy[isEnd.row][isEnd.column]);
+    return [visitedVertices, shortestPath];
+  };
+
   const Astar = () => {
     const copy = _.cloneDeep(isGrid);
     let visitedVertices = astar(copy, isStart, isEnd);
@@ -115,19 +151,48 @@ function App() {
   return (
     <div className="wrapper">
       <div className="upper">
-        {buttons.map((item, index) => {
-          return (
-            <Button
-              key={index}
-              color={item.color}
-              active={isActiveItem === item.text ? item.text : null}
-              onClick={() => setIsActiveItem(item.text)}
-            >
-              {item.text}
-            </Button>
-          );
-        })}
-        <Button color={"green"} active={false} onClick={() => startAlgorithm()}>
+        <div className="click-container">
+          <div className="title">Set states:</div>
+          {buttons.map((item, index) => {
+            return (
+              <Button
+                key={index}
+                alone={false}
+                color={item.color}
+                active={isActiveItem === item.text ? item.text : null}
+                onClick={() => setIsActiveItem(item.text)}
+              >
+                {item.text}
+              </Button>
+            );
+          })}
+        </div>
+        <div className="click-container">
+          <div className="title">Set algorithm:</div>
+          {AlgorithmButtons.map((item, index) => {
+            return (
+              <Button
+                key={index}
+                alone={false}
+                color={item.color}
+                active={isAlgorithm === item.text ? item.text : null}
+                onClick={() => setAlgorithm(item.text)}
+              >
+                {item.text}
+              </Button>
+            );
+          })}
+        </div>
+        <Button color={"transparent"} alone={true} active={isAlgorithmRunning} onClick={() => handleGridAlgorithmClear()}>
+          Clear algorithm states
+        </Button>
+        <Button color={"transparent"} alone={true} active={isAlgorithmRunning} onClick={() => handleGridClear()}>
+          Clear grid
+        </Button>
+        <Button color={"transparent"} alone={true} active={isAlgorithmRunning} onClick={() => randomGrid()}>
+          Random grid
+        </Button>
+        <Button color={"transparent"} alone={true} active={isAlgorithmRunning} onClick={() => startAlgorithm()}>
           Start
         </Button>
       </div>

@@ -26,7 +26,7 @@ const createVertex = (row, col) => {
         shortest: null,
         distance: 0,
         totalDistance: 0,
-        edges: [],
+        edges: []
     }
 }
 
@@ -57,11 +57,13 @@ export const clearAlgorithmStates = (grid) => {
     return grid;
 }
 
-export const clearAllStates = (grid) => {
+export const clearAllStates = (grid, withStartEnd=true) => {
     for(let row = 0; row < rows; row++) {
         for(let col = 0; col < columns; col++) {
-            grid[row][col].isStart = false;
-            grid[row][col].isEnd = false;
+            if(withStartEnd) {
+                grid[row][col].isStart = false;
+                grid[row][col].isEnd = false;
+            }
             grid[row][col].isWall = false;
             grid[row][col].isVisited = false;
             grid[row][col].isShortest = false;
@@ -69,4 +71,38 @@ export const clearAllStates = (grid) => {
         };
     };
     return grid;
+}
+
+export const randomStates = (grid) => {
+    let randValue = .1;
+    for(let row = 0; row < rows; row++) {
+        for(let col = 0; col < columns; col++) {
+            if(grid[row][col].isStart || grid[row][col].isEnd) continue;
+            let count = NeighbourWallRowCount(grid, row, col);
+            if(count === 0) {
+                randValue = .3;
+            } else if(count === 1) {
+                randValue = .5;
+            } else {
+                randValue = 0;
+            }
+
+            if(Math.random() < randValue) {
+                grid[row][col].isWall = true;
+            }
+        };
+    };
+    return grid;
+}
+
+const NeighbourWallRowCount = (grid, row, col) => {
+    let count = 0;
+    for(let y = -1; y < 2; y++) {
+        for(let x = -1; x < 2; x++) {
+            if(row+y === row && col+x === col) continue;
+            if(grid[row+y]?.[col+x]?.isWall) count++;
+        };
+    };
+    
+    return count;
 }

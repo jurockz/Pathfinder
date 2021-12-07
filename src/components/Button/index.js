@@ -2,14 +2,15 @@ import React from "react";
 
 import { StyledButton, StyledColor } from "./styles"
 
-export const Button = ({children, color, active, onClick}) => {
+export const Button = ({children, color, active, onClick, alone}) => {
     return (
         <>
             <StyledButton 
                 active={active}
                 onClick={onClick}
+                alone={alone}
             >
-                <StyledColor color={color}></StyledColor>
+                {color !== "transparent" ? <StyledColor color={color}></StyledColor> : ""}
                 {children}
             </StyledButton>
         </>

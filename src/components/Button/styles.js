@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const StyledButton = styled.div`
+    ${(props) => props.alone ? "min-width: 80px;": ""}
     margin: 5px;
     padding: 5px;
     font-size: 15px;
@@ -10,10 +11,9 @@ export const StyledButton = styled.div`
     transition: .5s;
     cursor: pointer;
     border-radius: 10px;
-    background-color: ${(props) => props.active === null || props.active === false ? "rgba(0, 0, 0, .1)" : "white"};
-    border: 1px solid ${(props) => props.active === null || props.active === false ? "transparent" : "grey"};
+    background-color: ${(props) => props.active === null || props.active === false ? "#c0c0c0" : "#e5e9f1"};
     &:hover {
-        background-color: ${(props) => props.active == null ? "rgba(0, 0, 0, .2)" : ""};;
+        background-color: ${(props) => props.active == null || props.active === false ? "#dfdfdf" : ""};;
     }
 `;
 

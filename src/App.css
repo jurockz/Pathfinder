@@ -7,6 +7,21 @@
 
 .wrapper .upper {
   padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.wrapper .upper .click-container {
+  padding: 5px;
+  border-radius: 10px;
+  background-color: #cecac3;
+  margin: 5px;
+  max-width: 250px;
+}
+
+.wrapper .upper .click-container .title {
+  margin-left: 5px;
+  padding-left: 5px;
 }
 
 .wrapper .lower {
