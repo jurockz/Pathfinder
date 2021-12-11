@@ -29,7 +29,6 @@ import {
 // Const
 const graphRows = 20;
 const graphColumns = 40;
-const fieldSquare = 20;
 const buttons = [
   { text: "start", color: "yellow" },
   { text: "wall", color: "black" },
@@ -43,41 +42,38 @@ const AlgorithmButtons = [
 var counter = 0;
 
 function App() {
-  const [isActiveItem, setIsActiveItem] = useState("start");
-
+  // Hooks
+  // Changes the state of the clicked button and is used to know what to draw in the grid
+  const [activeDrawButton, setActiveDrawButton] = useState("start");
+  // 2D Array of the Grid and its states
   const [isGrid, setGrid] = useState(initializeGrid(graphRows, graphColumns));
+  // The coordinates of the start and end cell
   const [isStart, setActiveStart] = useState(null);
   const [isEnd, setActiveEnd] = useState(null);
+  // Changes the state of the algorithm Buttons and is used to know what algorithm to run
   const [isAlgorithm, setAlgorithm] = useState("Breadth First Search");
+  // Is used to know if an algorithm is running at the moment
   const [isAlgorithmRunning, setAlgorithmRunning] = useState(false);
 
-  const handleGridChange = (newGrid) => {
-    setGrid(newGrid);
-  };
-
-  const handleStartChange = (coordinates) => {
-    setActiveStart(coordinates);
-  };
-
-  const handleEndChange = (coordinates) => {
-    setActiveEnd(coordinates);
-  };
-
+  // Clears all states out of grid
   const handleGridClear = () => {
     if(isAlgorithmRunning) return;
     setGrid(clearAllStates(_.cloneDeep(isGrid)));
   }
 
+  // Clears all states out of grid that are in connection to the animation of the algorithm
   const handleGridAlgorithmClear = () => {
     if(isAlgorithmRunning) return;
     setGrid(clearAlgorithmStates(_.cloneDeep(isGrid)));
   }
 
+  // Draws "random" walls in the grid
   const randomGrid = () => {
     if(isAlgorithmRunning) return;
     setGrid(randomStates(clearAllStates(_.cloneDeep(isGrid), false)));
   }
 
+  // Starts the algorithm
   const startAlgorithm = () => {
     if (!isStart || !isEnd || isAlgorithmRunning) return;
     setAlgorithmRunning(true);
@@ -89,7 +85,9 @@ function App() {
     animate(algorithmOutput[0], algorithmOutput[1]);
   };
 
+  // Starts the animation of the algorithm
   const animate = (visited, path) => {
+    // Sets the isVisited states in the visited order of the algorithm every 20ms
     var interval = setInterval(() => {
       if (counter === visited.length) {
         counter = 0;
@@ -105,7 +103,7 @@ function App() {
         return copy;
       });
       counter++;
-    }, 10);
+    }, 20);
   };
 
   const animatePath = (path) => {
@@ -124,9 +122,10 @@ function App() {
         return copy;
       });
       counter++;
-    }, 10);
+    }, 20);
   };
 
+  // Breadth First Search
   const BFS = () => {
     const copy = _.cloneDeep(isGrid);
     let visitedVertices = breadthFirstSearch(copy, isStart, isEnd);
@@ -134,6 +133,7 @@ function App() {
     return [visitedVertices, shortestPath];
   };
 
+  // Depth First Search
   const DFS = () => {
     const copy = _.cloneDeep(isGrid);
     let visitedVertices = depthFirstSearch(copy, isStart, isEnd);
@@ -141,6 +141,7 @@ function App() {
     return [visitedVertices, shortestPath];
   };
 
+  // A+
   const Astar = () => {
     const copy = _.cloneDeep(isGrid);
     let visitedVertices = astar(copy, isStart, isEnd);
@@ -159,8 +160,8 @@ function App() {
                 key={index}
                 alone={false}
                 color={item.color}
-                active={isActiveItem === item.text ? item.text : null}
-                onClick={() => setIsActiveItem(item.text)}
+                active={activeDrawButton === item.text ? item.text : null}
+                onClick={() => setActiveDrawButton(item.text)}
               >
                 {item.text}
               </Button>
@@ -198,14 +199,13 @@ function App() {
       </div>
       <div className="lower">
         <Grid
-          fieldSquare={fieldSquare}
-          activeButton={isActiveItem}
+          activeButton={activeDrawButton}
           grid={isGrid}
           isStart={isStart}
           isEnd={isEnd}
-          handleGridChange={handleGridChange}
-          handleStartChange={handleStartChange}
-          handleEndChange={handleEndChange}
+          handleGridChange={setGrid}
+          handleStartChange={setActiveStart}
+          handleEndChange={setActiveEnd}
         ></Grid>
       </div>
     </div>

@@ -112,7 +112,7 @@
     }
 }
 
-.node-wrapper {
+.cell-wrapper {
     height: 20px;
     width: 20px;
     display: flex;
@@ -121,7 +121,7 @@
     padding: 1px;
 }
 
-.node {
+.cell {
     cursor: pointer;
     background-color: rgb(194, 187, 178);
     height: 20px;
@@ -133,32 +133,32 @@
     border-radius: 10%;
 }
 
-.node-wrapper:hover .node {
+.cell-wrapper:hover .cell {
     border-radius: 50%;
 }
 
-.node.isStart {
+.cell.isStart {
     animation-name: isStart;
     background-color: #e0e035;
 }
 
-.node.isEnd {
+.cell.isEnd {
     animation-name: isEnd;
     background-color: #be5151;
 }
 
-.node.isShortest {
+.cell.isShortest {
     animation-name: isShortest;
     background-color: #6272a5;
 }
 
-.node.isVisited {
+.cell.isVisited {
     animation-name: isVisited;
     background-color: #87c79e;
     animation-duration: 4s;
 }
 
-.node.isWall {
+.cell.isWall {
     animation-name: isWall;
     animation-duration: 2s;
     background-color: black;

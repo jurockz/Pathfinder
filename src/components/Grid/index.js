@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 
 import { StyledGrid, StyledRow } from "./styles";
-import { Node } from "./Node";
+import { Cell } from "./Cell";
 import _ from "lodash";
 
 export const Grid = ({
-  fieldSquare,
   activeButton,
   grid,
   isStart,
@@ -14,8 +13,9 @@ export const Grid = ({
   handleEndChange,
   handleGridChange,
 }) => {
+  // Hooks
   const [isMouseDown, setMouseDown] = useState(false);
-  const [isFieldTriggered, setFieldTriggered] = useState(false);
+  const [isCellTriggered, setCellTriggered] = useState(false);
 
   const clickHandler = (row, column) => {
     // Start and end not at the same position
@@ -41,7 +41,7 @@ export const Grid = ({
   };
 
   const mouseMoveHandler = (row, column) => {
-    if (isMouseDown && !isFieldTriggered && activeButton === "wall") {
+    if (isMouseDown && !isCellTriggered && activeButton === "wall") {
       if (
         (isStart?.row === row && isStart?.column === column) ||
         (isEnd?.row === row && isEnd?.column === column)
@@ -49,7 +49,7 @@ export const Grid = ({
         return;
       }
       toggleStateGrid(row, column, "isWall");
-      setFieldTriggered(true);
+      setCellTriggered(true);
     }
   };
 
@@ -90,13 +90,13 @@ export const Grid = ({
             <StyledRow key={row}>
               {rowItem.map((y, column) => {
                 return (
-                  <Node
+                  <Cell
                     key={column}
                     extraClass={returnExtraClass(row,column)}
                     onClick={() => clickHandler(row, column)}
                     onMouseMove={() => mouseMoveHandler(row, column)}
-                    onMouseLeave={() => setFieldTriggered(false)}
-                  ></Node>
+                    onMouseLeave={() => setCellTriggered(false)}
+                  ></Cell>
                 );
               })}
             </StyledRow>

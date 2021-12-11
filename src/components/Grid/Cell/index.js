@@ -2,7 +2,7 @@ import React from "react";
 
 import "./styles.css";
 
-export const Node = ({
+export const Cell = ({
   extraClass,
   onClick,
   onMouseMove,
@@ -10,9 +10,9 @@ export const Node = ({
 }) => {
   return (
     <>
-      <div className="node-wrapper">
+      <div className="cell-wrapper">
         <div
-          className={"node " + extraClass}
+          className={"cell " + extraClass}
           onClick={onClick}
           onMouseMove={onMouseMove}
           onMouseLeave={onMouseLeave}
