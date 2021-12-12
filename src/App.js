@@ -10,21 +10,17 @@ import { Grid } from "./components/Grid";
 import {
   initializeGrid,
   clearAlgorithmStates,
-  clearAllStates,
-  randomStates
+  clearAllStates
 } from "./components/Grid/datastructure/Graph";
 
 // Algorithms
-import {
-  breadthFirstSearch,
-  getShortestPath
-} from "./components/Grid/algorithms/BreadthFirstSearch";
-import {
-  depthFirstSearch
-} from "./components/Grid/algorithms/DepthFirstSearch";
-import {
-  astar
-} from "./components/Grid/algorithms/Astar";
+import { getShortestPath } from "./components/Grid/algorithms/algorithmFuntions"
+import { breadthFirstSearch } from "./components/Grid/algorithms/BreadthFirstSearch";
+import { depthFirstSearch } from "./components/Grid/algorithms/DepthFirstSearch";
+import { astar } from "./components/Grid/algorithms/Astar";
+
+// Random Walls
+import { createRelatedWalls } from "./components/Grid/randomWalls/relatedWalls";
 
 // Const
 const graphRows = 20;
@@ -70,7 +66,7 @@ function App() {
   // Draws "random" walls in the grid
   const randomGrid = () => {
     if(isAlgorithmRunning) return;
-    setGrid(randomStates(clearAllStates(_.cloneDeep(isGrid), false)));
+    setGrid(createRelatedWalls(clearAllStates(_.cloneDeep(isGrid), false), graphRows, graphColumns));
   }
 
   // Starts the algorithm

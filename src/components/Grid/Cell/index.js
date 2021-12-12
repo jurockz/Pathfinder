@@ -2,6 +2,7 @@ import React from "react";
 
 import "./styles.css";
 
+// Eine "Cell" im Frontend stellt einen Knoten im Graphen wieder
 export const Cell = ({
   extraClass,
   onClick,

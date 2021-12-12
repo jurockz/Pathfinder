@@ -1,3 +1,21 @@
+# Pathfinding Projekt
+
+Dieser Pathfinder ist für das Transferprojekt an der RFH Köln von Jurek Ohrndorf erstellt worden
+
+## Datenstruktur
+
+Pathfinding Algorithmen werden für Graphen genutzt. Diese sind wichtig um dem Nutzer den schnellsten Weg von A nach B zu zeigen. (z.B. Google Maps)
+In diesem Projekt wird ein Rechteckiges Raster als Graph erstellt um die Pathfinding Algorithmen zu veranschaulichen.
+Weiter Information und Erklärungen sind in [Graph](./components/Grid/datastructure/Graph.js) zu finden
+
+## Aufbau
+
+Aus der ./App.js Datei werden die meisten Funktionalitäten gestartet. React gibt einem die Möglichkeit seine Website in verschiedene Komponenten 
+zu zerlegen und diese praktisch wiederzuverwenden. So wird das Raster aus der ./components/Grid/index.js Datei importiert und diese wiederrum importiert
+das Frontend der Knoten des Graphen aus der ./components/
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

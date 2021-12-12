@@ -2,6 +2,7 @@ import React from "react";
 
 import { StyledButton, StyledColor } from "./styles"
 
+// Ein wiederverwendbarer Button
 export const Button = ({children, color, active, onClick, alone}) => {
     return (
         <>
