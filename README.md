@@ -6,13 +6,38 @@ Dieser Pathfinder ist für das Transferprojekt an der RFH Köln von Jurek Ohrndo
 
 Pathfinding Algorithmen werden für Graphen genutzt. Diese sind wichtig um dem Nutzer den schnellsten Weg von A nach B zu zeigen. (z.B. Google Maps)
 In diesem Projekt wird ein Rechteckiges Raster als Graph erstellt um die Pathfinding Algorithmen zu veranschaulichen.
-Weiter Information und Erklärungen sind in [Graph](Graph) zu finden
+Weiter Information und Erklärungen sind in [Graph](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/datastructure/Graph.js) zu finden
 
 ## Aufbau
 
 Aus der ./App.js Datei werden die meisten Funktionalitäten gestartet. React gibt einem die Möglichkeit seine Website in verschiedene Komponenten 
-zu zerlegen und diese praktisch wiederzuverwenden. So wird das Raster aus der [Grid](Grid/index) Datei importiert und diese wiederrum importiert
-das Frontend der Knoten des Graphen aus der ./components/
+zu zerlegen und diese praktisch wiederzuverwenden. So wird das Raster aus der [Grid](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/index.js) Datei importiert und diese wiederrum importiert das Frontend der Knoten des Graphen aus der [Cell](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/Cell/index.js) Datei.
+Für die [Buttons](https://github.com/jurockz/Pathfinder/blob/main/src/components/Button/index.js) habe ich ebenfalls eine Komponente geschrieben.
+Es gibt in vielen Dateien React-Spezifische Syntax auf die ich hier aber nicht eingehen werden, da sich das Projekt mit Pathfinding Algorithmen beschäftigem soll.
+In einer Vorstellung kann ich darauf mehr eingehen.
+
+## Algorithmen
+
+Die Pathfinding bzw. Wegfindealgorithmen geht es um die Suche eines Weges oder des optimalen Weges von einem Knoten A zu einem Knoten B.
+Dafür gibt es verschiedene Algorithmen, von denen ich hier drei umgesetzt habe. Alle dieser Algorithmen lassen sich durch unpassierbare Wände ergänzen, sodass die Resultate etwas spannender werden.
+
+### Breitensuche und Tiefensuche
+
+Dies sind zwei Algorithmen die keine Gewichtung der Kanten mit einberechnen. 
+Weitere Erklärungen finden sich in den jeweiligen Dateien zur [Breitensuche](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/algorithms/BreadthFirstSearch.js) und zur [Tiefensuche](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/algorithms/DepthFirstSearch.js).
+
+### A*
+
+Der A* Algorithmus kann gewichtete Kanten mit einberechnen. In meiner Visualisierung ist dies nicht mit umgesetzt, jedoch wäre das kein großes Problem. Gewichtete Kanten können in der Nutzung von großen Vorteil sein, wenn der Algorithmus z.B. Hindernisse wie ein Wald oder Schlamm mit in die Wegberechnung mit einbeziehen soll. Mehr Information über die Funktionalität des A* Algorithmus befinden sich in der zugehörigen [Datei](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/algorithms/Astar.js)
+
+## Zufällige Wände
+
+Zuletzt habe ich noch ein Funktion geschrieben die das Raster mit Wänden füllt die möglichst zusammenhängend liegen ohne den Weg zwischen Start- und Endknoten zu verschließen.
+Mehr Informationen dazu [hier](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/randomWalls/relatedWalls.js)
+
+
+
+
 
 
 
