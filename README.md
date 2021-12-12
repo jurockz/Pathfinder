@@ -6,12 +6,12 @@ Dieser Pathfinder ist für das Transferprojekt an der RFH Köln von Jurek Ohrndo
 
 Pathfinding Algorithmen werden für Graphen genutzt. Diese sind wichtig um dem Nutzer den schnellsten Weg von A nach B zu zeigen. (z.B. Google Maps)
 In diesem Projekt wird ein Rechteckiges Raster als Graph erstellt um die Pathfinding Algorithmen zu veranschaulichen.
-Weiter Information und Erklärungen sind in [Graph](Graph.js) zu finden
+Weiter Information und Erklärungen sind in [Graph](Graph) zu finden
 
 ## Aufbau
 
 Aus der ./App.js Datei werden die meisten Funktionalitäten gestartet. React gibt einem die Möglichkeit seine Website in verschiedene Komponenten 
-zu zerlegen und diese praktisch wiederzuverwenden. So wird das Raster aus der [Grid](Grid/index.js) Datei importiert und diese wiederrum importiert
+zu zerlegen und diese praktisch wiederzuverwenden. So wird das Raster aus der [Grid](Grid/index) Datei importiert und diese wiederrum importiert
 das Frontend der Knoten des Graphen aus der ./components/
 
 
