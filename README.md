@@ -13,7 +13,7 @@ Weiter Information und Erklärungen sind in [Graph](https://github.com/jurockz/P
 Aus der ./App.js Datei werden die meisten Funktionalitäten gestartet. React gibt einem die Möglichkeit seine Website in verschiedene Komponenten 
 zu zerlegen und diese praktisch wiederzuverwenden. So wird das Raster aus der [Grid](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/index.js) Datei importiert und diese wiederrum importiert das Frontend der Knoten des Graphen aus der [Cell](https://github.com/jurockz/Pathfinder/blob/main/src/components/Grid/Cell/index.js) Datei.
 Für die [Buttons](https://github.com/jurockz/Pathfinder/blob/main/src/components/Button/index.js) habe ich ebenfalls eine Komponente geschrieben.
-Es gibt in vielen Dateien React-Spezifische Syntax auf die ich hier aber nicht eingehen werden, da sich das Projekt mit Pathfinding Algorithmen beschäftigem soll.
+Es gibt in vielen Dateien React-Spezifische Syntax auf die ich hier aber nicht eingehen werden.
 In einer Vorstellung kann ich darauf mehr eingehen.
 
 ## Algorithmen
