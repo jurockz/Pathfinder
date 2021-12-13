@@ -9,7 +9,7 @@ export const initializeGrid = (graphRows, graphColumns) => {
     for(let row = 0; row < rows; row++) {
         let gridRow = [];
         for(let col = 0; col < columns; col++) {
-            gridRow.push(createVertex(row, col));
+            gridRow.push(createNode(row, col));
         }
         grid.push(gridRow);
     }
@@ -17,7 +17,7 @@ export const initializeGrid = (graphRows, graphColumns) => {
 }
 
 // Erstellt einen Knoten
-const createVertex = (row, col) => {
+const createNode = (row, col) => {
     return {
         coordinates: {row, col},
         isStart: false,

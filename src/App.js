@@ -50,6 +50,9 @@ function App() {
   const [isAlgorithm, setAlgorithm] = useState("Breadth First Search");
   // Is used to know if an algorithm is running at the moment
   const [isAlgorithmRunning, setAlgorithmRunning] = useState(false);
+  // Counts to visualize the visited Nodes
+  const [countPath, setCountPath] = useState(0);
+  const [countVisitedNodes, setcountVisitedNodes] = useState(0);
 
   // Clears all states out of grid
   const handleGridClear = () => {
@@ -74,6 +77,8 @@ function App() {
     if (!isStart || !isEnd || isAlgorithmRunning) return;
     setAlgorithmRunning(true);
     setGrid(clearAlgorithmStates(isGrid));
+    setCountPath(0);
+    setcountVisitedNodes(0);
     let algorithmOutput = null;
     if(isAlgorithm === "Breadth First Search") algorithmOutput = BFS();
     if(isAlgorithm === "A*") algorithmOutput = Astar();
@@ -98,6 +103,8 @@ function App() {
         ].isVisited = true;
         return copy;
       });
+
+      setcountVisitedNodes((prev) => prev+1)
       counter++;
     }, 20);
   };
@@ -117,6 +124,7 @@ function App() {
         ].isShortest = true;
         return copy;
       });
+      setCountPath((prev) => prev+1);
       counter++;
     }, 20);
   };
@@ -124,25 +132,25 @@ function App() {
   // Breadth First Search
   const BFS = () => {
     const copy = _.cloneDeep(isGrid);
-    let visitedVertices = breadthFirstSearch(copy, isStart, isEnd);
+    let visitedNodes = breadthFirstSearch(copy, isStart, isEnd);
     let shortestPath = getShortestPath(copy[isEnd.row][isEnd.column]);
-    return [visitedVertices, shortestPath];
+    return [visitedNodes, shortestPath];
   };
 
   // Depth First Search
   const DFS = () => {
     const copy = _.cloneDeep(isGrid);
-    let visitedVertices = depthFirstSearch(copy, isStart, isEnd);
+    let visitedNodes = depthFirstSearch(copy, isStart, isEnd);
     let shortestPath = getShortestPath(copy[isEnd.row][isEnd.column]);
-    return [visitedVertices, shortestPath];
+    return [visitedNodes, shortestPath];
   };
 
   // A+
   const Astar = () => {
     const copy = _.cloneDeep(isGrid);
-    let visitedVertices = astar(copy, isStart, isEnd);
+    let visitedNodes = astar(copy, isStart, isEnd);
     let shortestPath = getShortestPath(copy[isEnd.row][isEnd.column]);
-    return [visitedVertices, shortestPath];
+    return [visitedNodes, shortestPath];
   };
 
   return (
@@ -203,6 +211,10 @@ function App() {
           handleStartChange={setActiveStart}
           handleEndChange={setActiveEnd}
         ></Grid>
+        <div className="count-wrapper">
+          <div className="visited-Nodes-count">{countVisitedNodes} nodes visited</div>
+          <div className="path-count">{countPath} nodes from start to end</div>
+        </div>
       </div>
     </div>
   );

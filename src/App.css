@@ -33,3 +33,25 @@
   height: 100%;
   overflow: auto;
 }
+
+.count-wrapper {
+  display: flex;
+  justify-content: space-around;
+  padding: 5px;
+}
+
+.count-wrapper .visited-Nodes-count {
+  padding: 10px;
+  font-size: 20px;
+  background-color: #cecac3;
+  border-radius: 20px;
+  width: 170px;
+}
+
+.count-wrapper .path-count {
+  padding: 10px;
+  font-size: 20px;
+  background-color: #cecac3;
+  border-radius: 20px;
+  width: 240px;
+}
